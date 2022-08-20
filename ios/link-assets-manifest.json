@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/MuseoSans-100.otf",
+      "sha1": "49d351b0f06dbba1da78789976f33c2acabce92b"
+    },
+    {
+      "path": "assets/fonts/MuseoSans-300.otf",
+      "sha1": "73dfc5cce27c8d716e5c148db0d4d6c9b1f464b5"
+    },
+    {
+      "path": "assets/fonts/MuseoSans_500.otf",
+      "sha1": "bd0ccc06565f4cc438421bd6f101456815925034"
+    },
+    {
+      "path": "assets/fonts/MuseoSans_700.otf",
+      "sha1": "68a9fdbae63e4802020ac1c5b82515c77bc5399d"
+    }
+  ]
+}
