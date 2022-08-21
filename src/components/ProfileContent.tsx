@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { SCREEN_HEIGHT } from '../constants/utils';
+import {SCREEN_HEIGHT} from '../constants/utils';
 
 interface ProfileContentProps {
   name: string;
@@ -25,8 +25,8 @@ export default ProfileContent;
 
 const styles = StyleSheet.create({
   container: {
-      paddingTop: SCREEN_HEIGHT * 0.02,
-      flexDirection: 'row'
+    paddingTop: SCREEN_HEIGHT * 0.02,
+    flexDirection: 'row',
   },
   image: {
     width: 37,
