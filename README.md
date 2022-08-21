@@ -23,3 +23,8 @@ yarn install
   yarn ios
   
 ```
+
+
+
+https://user-images.githubusercontent.com/37220428/185809195-ca112f26-f9a6-49b5-af45-96a487d0eec9.mp4
+
