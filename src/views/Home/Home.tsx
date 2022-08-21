@@ -30,7 +30,7 @@ const Home = (props: HomeProps) => {
     item: item;
     index: number;
   }): JSX.Element => (
-    <SharedElement id={`item.${renderProps.item.id}`}>
+    <SharedElement style={{width: '50%'}} id={`item.${renderProps.item.id}`}>
       <Item action={action} {...renderProps} />
     </SharedElement>
   );
