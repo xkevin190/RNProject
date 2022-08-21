@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from './views/Home';
 import Profile from './views/Profile';
@@ -8,18 +8,31 @@ import Details from './views/Details';
 
 interface AppProps {}
 
-const Drawer = createDrawerNavigator();
+const Stack = createSharedElementStackNavigator();
 
 const Navigator = (props: AppProps) => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
+      <Stack.Navigator
         screenOptions={{headerShown: false}}
         initialRouteName="Home">
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Profile" component={Profile} />
-        <Drawer.Screen name="Details" component={Details} />
-      </Drawer.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen
+          name="Details"
+          sharedElements={(route, otherRoute, showing) => {
+            const {id} = route.params;
+            return [
+              {
+                resize: 'stretch',
+                id: `item.${id}`,
+                animation: 'fade',
+              },
+            ];
+          }}
+          component={Details}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
