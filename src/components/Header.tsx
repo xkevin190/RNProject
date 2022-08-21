@@ -8,13 +8,9 @@ interface HeaderProps {
 }
 
 const Header = (props: HeaderProps) => {
-  const letAction = () => {
-    props.navigation.openDrawer();
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={letAction}>
+      <TouchableOpacity>
         <Image source={require('../../assets/image/Menu.png')} />
       </TouchableOpacity>
       <View>

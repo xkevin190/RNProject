@@ -26,7 +26,7 @@ const Navigator = (props: AppProps) => {
               {
                 resize: 'stretch',
                 id: `item.${id}`,
-                animation: 'fade',
+                animation: 'fade-in',
               },
             ];
           }}

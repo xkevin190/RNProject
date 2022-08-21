@@ -2,39 +2,69 @@ import * as React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Container from '../../components/Container';
 import {NavigationProps} from '../../constants/types';
-import {item} from '../../state/aplication/type';
+import {IAplicationState, item} from '../../state/aplication/type';
 import {SharedElement} from 'react-navigation-shared-element';
 import FastImage from 'react-native-fast-image';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/utils';
 import ProfileContent from '../../components/ProfileContent';
 import * as Animatable from 'react-native-animatable';
+import {connect} from 'react-redux';
+import {IState} from '../../state/root';
+import {getImageProfiles} from '../../state/aplication/action';
+import {ActionCreator} from 'redux';
+import {Platform} from 'react-native';
 
 interface DetailsProps {
   navigation: NavigationProps;
   route: any;
+  aplication: IAplicationState;
 }
 
 const Details = (props: DetailsProps) => {
+  const [touchStart, setTouchStart] = React.useState<number | null>(null);
+
   const left = () => {
     props.navigation.navigate('Home');
   };
 
   const _item: item = props.route.params;
-  const AnimatableTouchableOpacity =
-    Animatable.createAnimatableComponent(TouchableOpacity);
+
+  const handlerMove = (locationX: number) => {
+    if (!touchStart) {
+      return;
+    }
+
+    const ruleOne = _item.index! < props.aplication.items.length - 1;
+    const ruleTwo = _item.index! !== 0;
+
+    if (touchStart > locationX && ruleOne) {
+      props.navigation.navigate('Details', {
+        ...props.aplication.items[_item.index! + 1],
+        index: _item.index! + 1,
+      });
+    } else if (touchStart < locationX && ruleTwo) {
+      props.navigation.navigate('Details', {
+        ...props.aplication.items[_item.index! - 1],
+        index: _item.index! - 1,
+      });
+    }
+    setTouchStart(null);
+  };
 
   return (
-    <>
+    <View
+      onTouchStart={e => setTouchStart(e.nativeEvent.locationX)}
+      onTouchEnd={e => handlerMove(e.nativeEvent.locationX)}>
       <SharedElement id={`item.${_item.id}`}>
         <FastImage
           style={styles.imageContainer}
           source={{uri: _item.urls.regular}}>
           <Container>
-            <AnimatableTouchableOpacity animation={'fadeInLeft'} onPress={left}>
+            <TouchableOpacity onPress={left}>
               <Image
                 source={require('../../../assets/image/ic_white_close.png')}
               />
-            </AnimatableTouchableOpacity>
+            </TouchableOpacity>
           </Container>
         </FastImage>
       </SharedElement>
@@ -49,21 +79,28 @@ const Details = (props: DetailsProps) => {
             <Text style={styles.textSubtitle}>{_item.likes} likes</Text>
             <ProfileContent
               name={_item.user.name}
+              isTouchable={true}
               subtitle={'View proile'}
               image={_item.user.profile_image.medium}
+              action={() => props.navigation.navigate('Profile', {item: _item})}
             />
           </View>
         </FastImage>
       </Animatable.View>
-    </>
+    </View>
   );
 };
 
-export default Details;
+const mapStateToProps = (state: IState) => ({
+  aplication: state.aplication,
+});
+
+export default connect(mapStateToProps, null)(Details);
 
 const styles = StyleSheet.create({
   containerFooter: {
-    height: SCREEN_HEIGHT * 0.3,
+    height:
+      Platform.OS === 'android' ? SCREEN_HEIGHT * 0.4 : SCREEN_HEIGHT * 0.3,
     width: SCREEN_WIDTH,
     position: 'absolute',
     bottom: 0,

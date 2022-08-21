@@ -1,21 +1,47 @@
 import * as React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SCREEN_HEIGHT} from '../constants/utils';
 
 interface ProfileContentProps {
   name: string;
   subtitle: string;
   image: string;
+  isTouchable: boolean;
+  styleTitle?: StyleProp<TextStyle>;
+  styleSubtitle?: StyleProp<TextStyle>;
+  styleImage?: StyleProp<ViewStyle>;
+  action?: () => void;
 }
 
 const ProfileContent = (props: ProfileContentProps) => {
   return (
     <View style={styles.container}>
-      <FastImage style={styles.image} source={{uri: props.image}} />
-      <View>
-        <Text style={styles.textName}>{props.name}</Text>
-        <Text style={styles.textSubtitle}>{props.subtitle}</Text>
+      <FastImage
+        style={[styles.image, props.styleImage]}
+        source={{uri: props.image}}
+      />
+      <View style={{flex: 1}}>
+        <Text style={[styles.textName, props.styleTitle]}>{props.name}</Text>
+        {props.isTouchable ? (
+          <TouchableOpacity onPress={props.action}>
+            <Text style={[styles.textSubtitle, props.styleSubtitle]}>
+              {props.subtitle}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={[styles.textSubtitle, props.styleSubtitle]}>
+            {props.subtitle}
+          </Text>
+        )}
       </View>
     </View>
   );

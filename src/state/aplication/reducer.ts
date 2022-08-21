@@ -4,6 +4,7 @@ import {IAplicationState, Payload, ListItems} from './type';
 const AplicationState = {
   loading: false,
   items: [],
+  profileItems: [],
 };
 
 export const AplicationReducer = (
@@ -21,6 +22,12 @@ export const AplicationReducer = (
       return {
         ...state,
         items: action.payload,
+      };
+    }
+    case ActionTypes.GET_PROFILE_ITEMS: {
+      return {
+        ...state,
+        profileItems: action.payload,
       };
     }
     default: {

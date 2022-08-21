@@ -44,11 +44,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  itemPar: {
-    backgroundColor: 'red',
-  },
+  itemPar: {},
   itemImpar: {
-    backgroundColor: 'yellow',
     marginLeft: 10,
     marginTop: 20,
   },

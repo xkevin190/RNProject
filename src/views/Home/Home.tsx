@@ -22,8 +22,8 @@ const Home = (props: HomeProps) => {
     props.getItems();
   }, []);
 
-  const action = (item, index) => {
-    props.navigation.navigate('Details', {...item, index: index});
+  const action = (_item: item, index: number) => {
+    props.navigation.navigate('Details', {..._item, index: index});
   };
 
   const RenderItem = (renderProps: {
